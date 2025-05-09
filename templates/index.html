@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@1/index.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+</head>
+<body>
+    <div id="login-container" class="container">
+        <div class="login-box">
+            <h1>Welcome to Flask Chat</h1>
+            <form id="login-form">
+                <div class="avatar-selection">
+                    <h3>Select Avatar</h3>
+                    <div class="avatar-grid">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=20" data-seed="20" class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=2" data-seed="2" class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=33" data-seed="33" class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=4" data-seed="4" class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=happy&backgroundColor=b6e3f4" data-seed="happy" class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=smile&backgroundColor=d1d4f9" data-seed="smile" class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=wink&backgroundColor=c0aede" data-seed="wink" class="avatar-option">
+                        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=cool&backgroundColor=ffdfbf" data-seed="cool" class="avatar-option">
+                    </div>
+                    <input type="hidden" id="selected-avatar" required>
+                </div>
+                <input type="text" id="username" placeholder="Enter your name" required>
+                <input type="text" id="room" placeholder="Enter room name" required>
+                <button type="submit">Join Room</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="chat-container" class="container hidden">
+        <div class="online-users">
+            <h3>Online Users</h3>
+            <ul id="users-list"></ul>
+        </div>
+        <div class="chat-box">
+            <div class="chat-header">
+                <h2>Room: <span id="room-name"></span></h2>
+                <button id="leave-btn">Leave Room</button>
+            </div>
+            <div id="messages" class="messages"></div>
+            <div id="typing-indicator" class="typing-indicator hidden"></div>
+            <form id="message-form">
+                <div class="message-input-container">
+                    <button type="button" id="emoji-button">😊</button>
+                    <emoji-picker id="emoji-picker" class="hidden"></emoji-picker>
+                    <input type="text" id="message" placeholder="Type your message..." required>
+                </div>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="video-controls hidden">
+        <span id="call-duration">00:00</span>
+        <button id="mute-btn">Mute</button>
+        <button id="camera-btn">Camera</button>
+        <button id="end-call-btn">End Call</button>
+    </div>
+
+    <div id="call-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Incoming Call</h3>
+            <p><span id="caller-name"></span> is calling...</p>
+            <div class="call-actions">
+                <button id="accept-call">Accept</button>
+                <button id="decline-call">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="video-container" class="hidden">
+        <video id="local-video" autoplay muted></video>
+        <video id="remote-video" autoplay></video>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+
+
