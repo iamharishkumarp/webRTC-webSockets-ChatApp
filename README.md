@@ -1,10 +1,10 @@
 # 💬 Flask Chat App
 
-A simple real-time chat app built using Flask and WebSockets.
+A simple real-time chat app built using Flask and WebSockets and WebRTC.
 
 ## 🛠 Tech Stack
 
 - Flask-SocketIO (WebSockets)
-- HTML
-- CSS
-- JavaScript
+- WebRTC, WebSockets
+- HTML, CSS, JS
+
